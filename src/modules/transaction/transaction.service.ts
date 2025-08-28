@@ -7,7 +7,7 @@ import { Account } from '../users/entities/Account.entity';
 import { User } from '../users/entities/User.entity';
 import { GeneratorService } from '../generator/generator.service';
 import { CreateCategoryDto, CreateTransactionDto, UpdateTransactionDto } from './dto/transaction.dto';
-import { categoriesMap } from 'src/common/types';
+import { categoriesMap } from '../../common/types';
 
 @Injectable()
 export class TransactionService {

@@ -12,7 +12,7 @@ import { UsersModule } from '../users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/entities/User.entity';
 import { MailModule } from '../mail/mail.module';
-import { envKeys } from '../../Config/envKeys';
+import { envKeys } from '../../config/envKeys';
 
 @Module({
   imports: [

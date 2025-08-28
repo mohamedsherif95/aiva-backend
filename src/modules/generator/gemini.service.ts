@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { envKeys } from '../../Config/envKeys';
-import { UtilsService } from 'src/common/utils.service';
+import { envKeys } from '../../config/envKeys';
+import { UtilsService } from '../../common/utils.service';
 
 @Injectable()
 export class GeminiService {
