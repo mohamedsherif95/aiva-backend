@@ -19,7 +19,7 @@ export class TransactionCategory {
     enum: TransactionCategoryType,
     default: TransactionCategoryType.EXPENSE
   })
-  type: TransactionCategoryType;
+  type: 'income' | 'expense';
 
   @OneToMany(() => Transaction, transaction => transaction.category)
   transactions: Transaction[];

@@ -1,6 +1,8 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class InitialSchema20250828040000 implements MigrationInterface {
+export class InitialSchema1746373147925 implements MigrationInterface {
+  name = 'InitialSchema1746373147925'
+
   public async up(queryRunner: QueryRunner): Promise<void> {
     // Create transactionCategories table
     await queryRunner.query(`

@@ -33,8 +33,8 @@ export class AuthService {
     return bcrypt.compare(password, hash);
   }
 
-  async validateUser(phone: string, pass: string): Promise<any> {
-    const user = await this.usersService.getUserForValidation(phone);
+  async validateUser(email: string, pass: string): Promise<any> {
+    const user = await this.usersService.getUserForValidation(email);
     if (!user) throw new NotFoundException(this.i18n.t('messages.errors.notFound', {
       args: [{ objectName: 'User' }, { objectNameAr: 'المستخدم' }],
     }),);
@@ -71,12 +71,10 @@ export class AuthService {
     const payload = {
       id: user.id || user.userId,
       name: user.name,
-      phone: user.phone,
-      roleId: user.roleId,
-      role: user.role,
+      email: user.email,
     };
     return {
-      user,
+      ...user,
       accessToken: this.jwtService.sign(payload, { algorithm: 'HS256' }),
     };
   }

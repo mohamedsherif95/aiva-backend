@@ -12,22 +12,18 @@ import { I18nService } from 'nestjs-i18n';
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService, private readonly i18n: I18nService) {
-    super({ usernameField: 'phone' });
+    super({ usernameField: 'email' });
   }
 
-  async validate(phone: string, password: string): Promise<any> {
-    if (!phone || !password)
+  async validate(email: string, password: string): Promise<any> {
+    if (!email || !password)
       throw new HttpException(
         this.i18n.t('messages.errors.invalidCredentials'),
         HttpStatus.BAD_REQUEST,
       );
-    const user = await this.authService.validateUser(phone, password);
+    const user = await this.authService.validateUser(email, password);
     if (!user) {
       throw new UnauthorizedException(this.i18n.t('messages.errors.invalidCredentials'));
-    }
-    // TODO: to be uncommented later
-    else if (!user.isActive) {
-      throw new UnauthorizedException(this.i18n.t('messages.errors.notActive'));
     }
     return user;
   }

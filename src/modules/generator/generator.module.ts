@@ -9,5 +9,6 @@ import { CommonModule } from 'src/common/common.module';
   controllers: [GeneratorController],
   imports: [CommonModule],
   providers: [GeneratorService, PromptService, GeminiService],
+  exports: [GeneratorService]
 })
 export class GeneratorModule {}

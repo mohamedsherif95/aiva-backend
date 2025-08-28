@@ -2,10 +2,6 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { GeminiService } from './gemini.service';
 import { PromptService } from './prompt.service';
 
-type TransactionData = {
-    text: string;
-    data: Record<string, any>;
-};
 
 @Injectable()
 export class GeneratorService implements OnModuleInit {
@@ -22,12 +18,12 @@ export class GeneratorService implements OnModuleInit {
     private initializeCategories() {
         // Initialize with default categories or fetch from database
         this.promptService.categories = [
-            'food', 'transportation', 'utilities', 'entertainment', 
+            'income', 'food', 'transportation', 'utilities', 'entertainment', 
             'shopping', 'health', 'education', 'other'
         ];
     }
 
-    async textGenerator(input: string): Promise<TransactionData> {
+    async textGenerator(input: string) {
         if (!input?.trim()) {
             throw new Error('Input text cannot be empty');
         }
@@ -41,13 +37,13 @@ export class GeneratorService implements OnModuleInit {
                 throw new Error('Invalid response format from AI service');
             }
             
-            return result as TransactionData;
+            return result;
         } catch (error) {
             throw new Error(`Error generating text: ${error.message}`);
         }
     }
 
-    async audioGenerator(audioFile: Express.Multer.File): Promise<TransactionData> {
+    async audioGenerator(audioFile: Express.Multer.File) {
         if (!audioFile?.buffer) {
             throw new Error('Audio file is required');
         }
@@ -60,7 +56,7 @@ export class GeneratorService implements OnModuleInit {
                 throw new Error('Invalid response format from AI service');
             }
             
-            return result as TransactionData;
+            return result;
         } catch (error) {
             throw new Error(`Error processing audio: ${error.message}`);
         }

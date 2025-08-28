@@ -158,6 +158,20 @@ enum GlobalConfigurationsNames {
   tripSerialPointer = 'tripSerialPointer',
 }
 
+const categories = []
+
+const categoriesMap = {
+  income: 1,
+  food: 2,
+  transportation: 3,
+  utilities: 4,
+  entertainment: 5,
+  shopping: 6,
+  health: 7,
+  education: 8,
+  other: 9,
+}
+
 export {
   Roles,
   RolesIDs,
@@ -178,4 +192,5 @@ export {
   universityTripDetailsType,
   GlobalConfigurationsNames,
   adminstrativeRolesIds,
+  categoriesMap,
 };

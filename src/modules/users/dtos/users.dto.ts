@@ -5,6 +5,7 @@ import {
   IsString,
   IsNumber,
   IsDate,
+  IsEmail,
   MinLength,
 } from 'class-validator';
 
@@ -43,9 +44,9 @@ export class UpdateProfileDto {
   @IsNotEmpty()
   name: string;
 
-  @IsString()
+  @IsEmail()
   @IsNotEmpty()
-  phone: string;
+  email: string;
 }
 
 export class UpdatePasswordDto {

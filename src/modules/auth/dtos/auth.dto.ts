@@ -1,8 +1,8 @@
 import {
   IsBoolean,
+  IsEmail,
   IsNotEmpty,
   IsNumber,
-  IsPhoneNumber,
   IsString,
   MaxLength,
   MinLength,
@@ -16,17 +16,10 @@ export class SignupDto {
 
   @IsString()
   @IsNotEmpty()
-  @IsPhoneNumber('EG', {
-    message: 'Phone must be a valid egyptian phone number',
-  })
-  phone: string;
-
-  @IsString()
-  @IsNotEmpty()
   @MinLength(8)
   password: string;
 
-  @IsString()
+  @IsEmail()
   @IsNotEmpty()
   email: string;
 }

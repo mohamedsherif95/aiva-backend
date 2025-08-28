@@ -8,6 +8,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from './config/database.config';
 import { AcceptLanguageResolver, I18nJsonLoader, I18nModule, QueryResolver } from 'nestjs-i18n';
 import * as path from 'path';
+import { AuthModule } from './modules/auth/auth.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
 
 @Module({
   imports: [
@@ -21,8 +23,10 @@ import * as path from 'path';
       loader: I18nJsonLoader,
       resolvers: [{ use: QueryResolver, options: ['lang'] }, AcceptLanguageResolver],
     }),
+    AuthModule,
     GeneratorModule, 
-    CommonModule
+    CommonModule,
+    TransactionModule
   ],
   controllers: [AppController],
   providers: [AppService],

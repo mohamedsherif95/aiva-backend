@@ -11,21 +11,16 @@ export class UsersService {
         return this.userRepository.findOne({ where: filter, ...options });
     }
     
-    async getUserForValidation(phone: string) {
+    async getUserForValidation(email: string) {
     return (
         await this.userRepository.query(
         `SELECT 
         users.id,
         users.name,
-        users.phone,
-        users.password,
-        users."roleId",
-        users."isActive",
-        users."createdAt",
         users.email,
-        roles.name as "roleName",
-        roles."isHidden"
-        FROM users JOIN roles ON users."roleId" = roles.id WHERE phone = '${phone}'`,
+        users.password,
+        users."createdAt"
+        FROM users WHERE email = '${email}'`,
         )
     )?.[0];
     }

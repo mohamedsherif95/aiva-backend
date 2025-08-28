@@ -22,7 +22,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       where: { id: payloadData.id },
       select: ['id', 'name', 'email'],
     });
-    console.log('🚀 ~ JwtStrategy ~ validate ~ userData:', userData);
     if (!userData) return false;
 
     payloadData.id = userData.id;
