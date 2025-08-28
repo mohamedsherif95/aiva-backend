@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import keys from '../config/envKeys';
+import envKeys from '../../Config/envKeys';
 import { UtilsService } from 'src/common/utils.service';
 
 @Injectable()
@@ -9,8 +9,8 @@ export class GeminiService {
     private readonly model: any;
 
     constructor(private readonly utils: UtilsService) {      
-        this.AIGenAgent = new GoogleGenerativeAI(keys.GEMINI_API_KEY);
-        this.model = this.AIGenAgent.getGenerativeModel({ model: keys.GEMINI_MODEL });
+        this.AIGenAgent = new GoogleGenerativeAI(envKeys.GEMINI_API_KEY);
+        this.model = this.AIGenAgent.getGenerativeModel({ model: envKeys.GEMINI_MODEL });
     }
 
     async textGenerator(prompt: string) {

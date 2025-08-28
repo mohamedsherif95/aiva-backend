@@ -1,4 +1,4 @@
-import { Account } from '../../account/entities/account.entity';
+import { Account } from '../../users/entities/Account.entity';
 import { TransactionCategory } from './transaction-category.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinColumn } from 'typeorm';
 

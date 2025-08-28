@@ -1,4 +1,4 @@
-import { User } from '../../user/entities/user.entity';
+import { User } from './User.entity';
 import { Transaction } from '../../transaction/entities/transaction.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, JoinColumn } from 'typeorm';
 
