@@ -52,8 +52,7 @@ const defaultAllowedOrigins = [
   'http://localhost:5174',
   'http://localhost:5175',
   'http://localhost:5176',
-  'https://etihad-bus.vercel.app',
-  'https://etihad-bus-iota.vercel.app',
+  'https://aiva-frontend-gamma.vercel.app',
 ];
 
 // fare, fuelDaily, fuelLargeOne, fuelLargeTwo, maintenance, oil, tollCharges, debt
