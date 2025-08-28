@@ -1,0 +1,293 @@
+{
+  "tables": [
+    {
+      "name": "users",
+      "description": "System users with authentication details",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "name", "type": "varchar"},
+        {"name": "email", "type": "varchar", "unique": true, "nullable": false},
+        {"name": "phone", "type": "varchar", "unique": true},
+        {"name": "password", "type": "varchar", "select": false},
+        {"name": "isActive", "type": "boolean", "default": false},
+        {"name": "activatedAt", "type": "timestamp", "nullable": true},
+        {"name": "roleId", "type": "integer"},
+        {"name": "createdAt", "type": "timestamp", "default": "CURRENT_TIMESTAMP"}
+      ],
+      "relations": [
+        {"type": "ManyToOne", "target": "roles", "joinColumn": "roleId"},
+        {"type": "OneToMany", "target": "trips", "inverseSide": "user"},
+        {"type": "OneToMany", "target": "payrolls", "inverseSide": "user"},
+        {"type": "OneToMany", "target": "userOtps", "inverseSide": "user"},
+        {"type": "OneToMany", "target": "dailyBusReservations", "inverseSide": "user"}
+      ]
+    },
+    {
+      "name": "roles",
+      "description": "User roles and permissions",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "name", "type": "varchar"},
+        {"name": "isHidden", "type": "boolean", "default": false}
+      ],
+      "relations": [
+        {"type": "OneToMany", "target": "users", "inverseSide": "role"}
+      ]
+    },
+    {
+      "name": "buses",
+      "description": "Bus fleet information",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "name", "type": "varchar", "nullable": false},
+        {"name": "code", "type": "varchar", "nullable": false},
+        {"name": "number", "type": "varchar", "nullable": false},
+        {"name": "model", "type": "varchar", "nullable": false},
+        {"name": "type", "type": "enum", "enumValues": ["SMALL", "MEDIUM", "LARGE"], "nullable": false}
+      ],
+      "relations": [
+        {"type": "OneToMany", "target": "trips", "inverseSide": "bus"},
+        {"type": "OneToMany", "target": "busUniversityFares", "inverseSide": "bus"},
+        {"type": "OneToMany", "target": "busMonthlyBalances", "inverseSide": "bus"},
+        {"type": "OneToMany", "target": "dailyBusReservations", "inverseSide": "bus"}
+      ]
+    },
+    {
+      "name": "drivers",
+      "description": "Driver information",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "name", "type": "varchar", "unique": true, "nullable": false}
+      ],
+      "relations": [
+        {"type": "OneToMany", "target": "trips", "inverseSide": "driver"}
+      ]
+    },
+    {
+      "name": "clients",
+      "description": "Client organizations",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "name", "type": "varchar", "unique": true, "nullable": false}
+      ],
+      "relations": [
+        {"type": "OneToMany", "target": "universityTripsDetails", "inverseSide": "client"},
+        {"type": "OneToMany", "target": "regularTripsDetails", "inverseSide": "client"}
+      ]
+    },
+    {
+      "name": "universities",
+      "description": "University destinations",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "name", "type": "varchar", "nullable": false}
+      ],
+      "relations": [
+        {"type": "OneToMany", "target": "busUniversityFares", "inverseSide": "university"},
+        {"type": "OneToMany", "target": "universityTripsDetails", "inverseSide": "university"}
+      ]
+    },
+    {
+      "name": "trips",
+      "description": "Trip records",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "userId", "type": "integer", "nullable": false},
+        {"name": "busId", "type": "integer", "nullable": false},
+        {"name": "driverId", "type": "integer", "nullable": false},
+        {"name": "tripType", "type": "enum", "enumValues": ["UNIVERSITY", "REGULAR"], "default": "UNIVERSITY"},
+        {"name": "tripDate", "type": "date", "nullable": false},
+        {"name": "status", "type": "varchar"},
+        {"name": "createdAt", "type": "timestamp", "default": "CURRENT_TIMESTAMP"}
+      ],
+      "indexes": [
+        {"columns": ["tripDate"], "name": "idx_trip_date"},
+        {"columns": ["tripType"], "name": "idx_trip_type"},
+        {"columns": ["busId", "tripDate"], "name": "uniq_bus_trip_date", "unique": true}
+      ],
+      "relations": [
+        {"type": "ManyToOne", "target": "users", "joinColumn": "userId"},
+        {"type": "ManyToOne", "target": "buses", "joinColumn": "busId"},
+        {"type": "ManyToOne", "target": "drivers", "joinColumn": "driverId"},
+        {"type": "OneToMany", "target": "tripExpenses", "inverseSide": "trip"},
+        {"type": "OneToOne", "target": "universityTripsDetails", "inverseSide": "trip"},
+        {"type": "OneToOne", "target": "regularTripsDetails", "inverseSide": "trip"}
+      ]
+    },
+    {
+      "name": "universityTripsDetails",
+      "description": "Details specific to university trips",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "tripId", "type": "integer", "unique": true, "nullable": false},
+        {"name": "waitingTrips", "type": "integer", "default": 0},
+        {"name": "extraTrips", "type": "integer", "default": 0},
+        {"name": "extraTripsTimings", "type": "integer[]", "nullable": true},
+        {"name": "returnLocation", "type": "varchar", "nullable": true},
+        {"name": "universityId", "type": "integer", "nullable": false},
+        {"name": "clientId", "type": "integer", "nullable": false},
+        {"name": "tripAmount", "type": "numeric", "nullable": false},
+        {"name": "extraTripAmount", "type": "numeric", "nullable": false},
+        {"name": "waitingTripAmount", "type": "numeric", "nullable": false}
+      ],
+      "relations": [
+        {"type": "OneToOne", "target": "trips", "joinColumn": "tripId"},
+        {"type": "ManyToOne", "target": "universities", "joinColumn": "universityId"},
+        {"type": "ManyToOne", "target": "clients", "joinColumn": "clientId"}
+      ]
+    },
+    {
+      "name": "regularTripsDetails",
+      "description": "Details specific to regular trips",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "serialNumber", "type": "varchar", "unique": true, "nullable": false},
+        {"name": "tripId", "type": "integer", "unique": true, "nullable": false},
+        {"name": "clientId", "type": "integer", "nullable": false},
+        {"name": "totalAmount", "type": "float", "nullable": true},
+        {"name": "depositAmount", "type": "float", "nullable": true},
+        {"name": "remainingAmount", "type": "float", "nullable": true},
+        {"name": "destination", "type": "varchar", "nullable": false},
+        {"name": "phone", "type": "varchar", "nullable": true}
+      ],
+      "relations": [
+        {"type": "OneToOne", "target": "trips", "joinColumn": "tripId"},
+        {"type": "ManyToOne", "target": "clients", "joinColumn": "clientId"}
+      ]
+    },
+    {
+      "name": "tripExpenses",
+      "description": "Expenses related to trips",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "tripId", "type": "integer", "nullable": false},
+        {"name": "type", "type": "enum", "enumValues": ["FUEL", "MAINTENANCE", "DRIVER", "OTHER"]},
+        {"name": "amount", "type": "numeric", "nullable": false},
+        {"name": "notes", "type": "varchar", "nullable": true},
+        {"name": "createdAt", "type": "timestamp", "default": "CURRENT_TIMESTAMP"}
+      ],
+      "uniqueConstraints": [
+        {"columns": ["tripId", "type"], "name": "UQ_trip_expense_type"}
+      ],
+      "relations": [
+        {"type": "ManyToOne", "target": "trips", "joinColumn": "tripId"}
+      ]
+    },
+    {
+      "name": "busUniversityFares",
+      "description": "Pricing for university trips by bus",
+      "columns": [
+        {"name": "busId", "type": "integer", "primary": true, "nullable": false},
+        {"name": "universityId", "type": "integer", "primary": true, "nullable": false},
+        {"name": "tripAmount", "type": "numeric", "nullable": false},
+        {"name": "extraTripAmount", "type": "numeric", "nullable": false},
+        {"name": "waitingTripAmount", "type": "numeric", "nullable": false}
+      ],
+      "relations": [
+        {"type": "ManyToOne", "target": "buses", "joinColumn": "busId", "onDelete": "CASCADE"},
+        {"type": "ManyToOne", "target": "universities", "joinColumn": "universityId", "onDelete": "CASCADE"}
+      ]
+    },
+    {
+      "name": "busMonthlyBalances",
+      "description": "Monthly financial balances for buses",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "busId", "type": "integer", "nullable": false},
+        {"name": "year", "type": "integer", "nullable": false},
+        {"name": "month", "type": "integer", "nullable": false},
+        {"name": "totalIn", "type": "numeric", "precision": 10, "scale": 2, "default": 0},
+        {"name": "totalOut", "type": "numeric", "precision": 10, "scale": 2, "default": 0},
+        {"name": "createdAt", "type": "timestamp", "default": "CURRENT_TIMESTAMP"}
+      ],
+      "uniqueConstraints": [
+        {"columns": ["busId", "year", "month"], "name": "UQ_bus_year_month"}
+      ],
+      "relations": [
+        {"type": "ManyToOne", "target": "buses", "joinColumn": "busId"}
+      ]
+    },
+    {
+      "name": "dailyBusReservations",
+      "description": "Daily bus reservations by users",
+      "columns": [
+        {"name": "busId", "type": "integer", "primary": true, "nullable": false},
+        {"name": "userId", "type": "integer", "primary": true, "nullable": false}
+      ],
+      "relations": [
+        {"type": "ManyToOne", "target": "buses", "joinColumn": "busId"},
+        {"type": "ManyToOne", "target": "users", "joinColumn": "userId"}
+      ]
+    },
+    {
+      "name": "payrolls",
+      "description": "Employee payroll records",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "userId", "type": "integer", "nullable": false},
+        {"name": "payDay", "type": "timestamp", "nullable": false},
+        {"name": "netSalary", "type": "numeric", "nullable": false},
+        {"name": "bonus", "type": "numeric", "nullable": false},
+        {"name": "absentDays", "type": "integer", "nullable": false},
+        {"name": "salaryAdvance", "type": "numeric", "nullable": false},
+        {"name": "finalSalary", "type": "numeric", "nullable": false},
+        {"name": "notes", "type": "varchar", "nullable": false},
+        {"name": "createdAt", "type": "timestamp", "default": "CURRENT_TIMESTAMP"}
+      ],
+      "relations": [
+        {"type": "ManyToOne", "target": "users", "joinColumn": "userId"}
+      ]
+    },
+    {
+      "name": "userOtps",
+      "description": "One-time passwords for user authentication",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "otp", "type": "varchar", "length": 6},
+        {"name": "expiresAt", "type": "timestamp with time zone"},
+        {"name": "isUsed", "type": "boolean", "default": false},
+        {"name": "userId", "type": "integer"},
+        {"name": "createdAt", "type": "timestamp with time zone", "default": "CURRENT_TIMESTAMP"},
+        {"name": "updatedAt", "type": "timestamp with time zone", "default": "CURRENT_TIMESTAMP"}
+      ],
+      "relations": [
+        {"type": "ManyToOne", "target": "users", "joinColumn": "userId", "onDelete": "CASCADE"}
+      ]
+    },
+    {
+      "name": "cronJobExecutions",
+      "description": "Log of cron job executions",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "jobName", "type": "varchar", "length": 100},
+        {"name": "status", "type": "enum", "enumValues": ["SUCCEEDED", "FAILED"], "default": "SUCCEEDED"},
+        {"name": "metadata", "type": "jsonb", "nullable": true},
+        {"name": "error", "type": "text", "nullable": true},
+        {"name": "errorStack", "type": "text", "nullable": true},
+        {"name": "createdAt", "type": "timestamp"}
+      ]
+    },
+    {
+      "name": "globalConfigurations",
+      "description": "Application-wide configuration settings",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "key", "type": "varchar", "unique": true, "nullable": false},
+        {"name": "value", "type": "text", "nullable": false},
+        {"name": "description", "type": "text", "nullable": true},
+        {"name": "createdAt", "type": "timestamp", "default": "CURRENT_TIMESTAMP"},
+        {"name": "updatedAt", "type": "timestamp", "default": "CURRENT_TIMESTAMP"}
+      ]
+    },
+    {
+      "name": "migrations",
+      "description": "Database migrations history",
+      "columns": [
+        {"name": "id", "type": "SERIAL", "primary": true},
+        {"name": "timestamp", "type": "bigint", "nullable": false},
+        {"name": "name", "type": "varchar", "nullable": false},
+        {"name": "runAt", "type": "timestamp", "default": "CURRENT_TIMESTAMP"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+    "errors": {
+        "phoneInUse": "Phone number already in use by another user",
+        "signedUpButNotActive": "Phone number already registered but not active yet",
+        "invalidCredentials": "Invalid login credentials",
+        "serverError": "Something went wrong",
+        "somethingWentWrong": "Something went wrong",
+        "throttling": "Too many requests. Please try again later!",
+        "invalidRole": "Assigned role is invalid",
+        "busReserved": "Bus is reserved for today",
+        "notFound": "{0.objectName} not found",
+        "userNotFound": "User not found",
+        "invalidOrExpiredOtp": "Invalid or expired OTP",
+        "busInUse": "Bus is already on a trip by another user",
+        "serialNumberInUse": "Serial number is already in use",
+        "missingFares": "Please complete fares for the selected university first",
+        "notAllowedToUpdateTrip": "You are not allowed to update this trip",
+        "notAllowedToUpdateOldTrip": "You are not allowed to update an old trip",
+        "reserveFutureTrips": "Trip date must be in the future",
+        "invalidId": "Invalid ID",
+        "missingTripDetails": "Please complete the trip or university details",
+        "notActive": "Account not activated yet",
+        "duplicate": "{0.objectName} already exists"
+    },
+    "success": {
+        "retrieve":  "Data retrieved successfully",
+        "update": "Data updated successfully",
+        "delete": "Data deleted successfully",
+        "create": "Data created successfully",
+        "login": "Logged in successfully",
+        "signup": "Signed up successfully",
+        "notFound": "Data not found",
+        "reserveBus": "Bus reserved successfully",
+        "cancelBusReservation": "Bus reservation cancelled successfully",
+        "passwordResetEmailSent": "If an account with that email exists, we've sent a password reset OTP",
+        "passwordResetSuccess": "Password has been reset successfully"
+    }
+}

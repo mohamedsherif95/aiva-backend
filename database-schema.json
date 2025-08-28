@@ -1,0 +1,49 @@
+{
+  "tables": [
+    {
+      "name": "users",
+      "columns": ["id", "name", "email", "phone", "password", "isActive", "roleId"],
+      "relations": ["roles(ManyToOne)", "trips(OneToMany)", "payrolls(OneToMany)"]
+    },
+    {
+      "name": "buses",
+      "columns": ["id", "name", "code", "number", "model", "type"],
+      "relations": ["trips(OneToMany)", "busUniversityFares(OneToMany)"]
+    },
+    {
+      "name": "trips",
+      "columns": ["id", "userId", "busId", "driverId", "tripType", "tripDate"],
+      "relations": ["users(ManyToOne)", "buses(ManyToOne)", "drivers(ManyToOne)"]
+    },
+    {
+      "name": "drivers",
+      "columns": ["id", "name"],
+      "relations": ["trips(OneToMany)"]
+    },
+    {
+      "name": "universities",
+      "columns": ["id", "name"],
+      "relations": ["busUniversityFares(OneToMany)"]
+    },
+    {
+      "name": "busUniversityFares",
+      "columns": ["busId", "universityId", "tripAmount", "extraTripAmount", "waitingTripAmount"],
+      "relations": ["buses(ManyToOne)", "universities(ManyToOne)"]
+    },
+    {
+      "name": "tripExpenses",
+      "columns": ["id", "tripId", "type", "amount", "notes"],
+      "relations": ["trips(ManyToOne)"]
+    },
+    {
+      "name": "busMonthlyBalances",
+      "columns": ["id", "busId", "year", "month", "totalIn", "totalOut"],
+      "relations": ["buses(ManyToOne)"]
+    },
+    {
+      "name": "userOtps",
+      "columns": ["id", "otp", "expiresAt", "isUsed", "userId"],
+      "relations": ["users(ManyToOne)"]
+    }
+  ]
+}

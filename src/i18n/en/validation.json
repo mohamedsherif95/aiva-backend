@@ -1,0 +1,16 @@
+{
+  "isNotEmpty": "{{property}} is required",
+  "isString": "{{property}} must be a string",
+  "isNumber": "{{property}} must be a number",
+  "isPositive": "{{property}} must be a positive number",
+  "isInt": "{{property}} must be an integer number",
+  "isEmail": "{{property}} must be a valid email address",
+  "min": "{{property}} is lower than the allowed limit",
+  "max": "{{property}} is higher than the allowed limit",
+  "isDateString": "{{property}} must be a valid date",
+  "isEnum": "{{property}} must be one of the following values: $constraint1",
+  "isArray": "{{property}} must be an array",
+  "isBoolean": "{{property}} must be a boolean value",
+  "isIn": "{{property}} must be one of the following values: $constraint1",
+  "isPhoneNumber": "{{property}} must be a valid phone number"
+}

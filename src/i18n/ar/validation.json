@@ -1,0 +1,16 @@
+{
+  "isNotEmpty": "{{property}} مطلوب",
+  "isString": "يجب أن يكون {{property}} نصيًا",
+  "isNumber": "يجب أن يكون {{property}} رقمًا",
+  "isPositive": "يجب أن يكون {{property}} رقمًا موجبًا",
+  "isInt": "يجب أن يكون {{property}} رقمًا صحيحًا",
+  "isEmail": "{{property}} يجب أن يكون بريدًا إلكترونيًا صالحًا",
+  "min": "{{property}} أقل من الحد المسموح به",
+  "max": "{{property}} أكبر من الحد المسموح به",
+  "isDateString": "{{property}} يجب أن يكون تاريخًا صالحًا",
+  "isEnum": "{{property}} يجب أن يكون أحد القيم التالية: {{constraint1}}",
+  "isArray": "{{property}} يجب أن يكون مصفوفة",
+  "isBoolean": "{{property}} يجب أن يكون قيمة منطقية (صواب/خطأ)",
+  "isIn": "{{property}} يجب أن يكون أحد القيم التالية: {{constraint1}}",
+  "isPhoneNumber": "{{property}} يجب أن يكون رقم هاتف صالحًا"
+}

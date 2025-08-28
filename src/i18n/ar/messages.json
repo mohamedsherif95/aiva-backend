@@ -1,0 +1,38 @@
+{
+    "errors": {
+        "phoneInUse": "رقم الهاتف مسجل بالفعل لدى مستخدم آخر",
+        "signedUpButNotActive": "رقم الهاتف مسجل بالفعل ولكن ليس مفعل بعد",
+        "invalidCredentials": "بيانات تسجيل الدخول غير صحيحة",
+        "serverError": "حدث خطأ في الخادم",
+        "somethingWentWrong": "حدث خطأ ما",
+        "throttling": "عدد كبير جدًا من الطلبات، يرجى المحاولة لاحقًا.",
+        "invalidRole": "الدور المراد تعيينه غير صحيح",
+        "busReserved": "تم حجز الباص اليوم بالفعل",
+        "notFound": "{1.objectNameAr} غير موجود",
+        "userNotFound": "المستخدم غير موجود",
+        "invalidOrExpiredOtp": "كود التحقق غير صالح أو منتهي الصلاحية",
+        "busInUse": "الحافلة مستخدمة بالفعل في رحلة لدى مستخدم آخر",
+        "serialNumberInUse": "السيريال مستخدم بالفعل في رحلة أخرى",
+        "missingFares": "برجاء استكمال الرسوم الخاصة بالجامعة قبل تسجيل الرحلة",
+        "notAllowedToUpdateTrip": "لا يمكنك تعديل هذه الرحلة",
+        "notAllowedToUpdateOldTrip": "لا يمكنك تعديل رحلة قديمة",
+        "reserveFutureTrips": "تاريخ الرحلة يجب أن يكون في المستقبل",
+        "invalidId": "رقم ID غير صحيح",
+        "missingTripDetails": "برجاء استكمال تفاصيل الرحلة أو الجامعة",
+        "notActive": "الحساب غير مفعل بعد",
+        "duplicate": "{1.objectNameAr} موجود بالفعل"
+    },
+    "success": {
+        "retrieve":  "تم استرجاع البيانات بنجاح",
+        "update": "تم تحديث البيانات بنجاح",
+        "delete": "تم حذف البيانات بنجاح",
+        "create": "تم إنشاء البيانات بنجاح",
+        "login": "تم تسجيل الدخول بنجاح",
+        "signup": "تم التسجيل بنجاح",
+        "notFound": "لا يوجد بيانات",
+        "reserveBus": "تم حجز الباص بنجاح",
+        "cancelBusReservation": "تم إلغاء حجز الباص بنجاح",
+        "passwordResetEmailSent": "إذا كان هناك حساب بهذا البريد الإلكتروني، فقد أرسلنا رمز إعادة تعيين كلمة المرور",
+        "passwordResetSuccess": "تم إعادة تعيين كلمة المرور بنجاح"
+    }
+}

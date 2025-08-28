@@ -1,0 +1,81 @@
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { GeminiService } from './gemini.service';
+import { PromptService } from './prompt.service';
+
+type TransactionData = {
+    text: string;
+    data: Record<string, any>;
+};
+
+@Injectable()
+export class GeneratorService implements OnModuleInit {
+    constructor(
+        private readonly geminiService: GeminiService,
+        private readonly promptService: PromptService,
+    ) {}
+
+    async onModuleInit() {
+        // Initialize categories when the module loads
+        this.initializeCategories();
+    }
+
+    private initializeCategories() {
+        // Initialize with default categories or fetch from database
+        this.promptService.categories = [
+            'food', 'transportation', 'utilities', 'entertainment', 
+            'shopping', 'health', 'education', 'other'
+        ];
+    }
+
+    async textGenerator(input: string): Promise<TransactionData> {
+        if (!input?.trim()) {
+            throw new Error('Input text cannot be empty');
+        }
+
+        try {
+            const prompt = this.promptService.categorizeTextTransactions(input);
+            const result = await this.geminiService.textGenerator(prompt);
+            
+            // Validate the response structure
+            if (!result || typeof result !== 'object') {
+                throw new Error('Invalid response format from AI service');
+            }
+            
+            return result as TransactionData;
+        } catch (error) {
+            throw new Error(`Error generating text: ${error.message}`);
+        }
+    }
+
+    async audioGenerator(audioFile: Express.Multer.File): Promise<TransactionData> {
+        if (!audioFile?.buffer) {
+            throw new Error('Audio file is required');
+        }
+
+        try {
+            const prompt = this.promptService.categorizeAudioTransactions();
+            const result = await this.geminiService.audioGenerator(prompt, audioFile);
+            
+            if (!result || typeof result !== 'object') {
+                throw new Error('Invalid response format from AI service');
+            }
+            
+            return result as TransactionData;
+        } catch (error) {
+            throw new Error(`Error processing audio: ${error.message}`);
+        }
+    }
+    
+    async speechToText(audioFile: Express.Multer.File): Promise<string> {
+        if (!audioFile?.buffer) {
+            throw new Error('Audio file is required');
+        }
+
+        try {
+            const result = await this.geminiService.speechToText(audioFile);
+            return result?.toString() || '';
+        } catch (error) {
+            throw new Error(`Error converting speech to text: ${error.message}`);
+        }
+    }
+}
