@@ -1,5 +1,5 @@
 import { join } from 'path';
-import envKeys from './envKeys';
+import { envKeys } from './envKeys';
 const migrationsDirPath = join(__dirname, '..', 'migrations/');
 
 

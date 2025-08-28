@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import envKeys from '../../Config/envKeys';
+import { envKeys } from '../../Config/envKeys';
 import { UtilsService } from 'src/common/utils.service';
 
 @Injectable()

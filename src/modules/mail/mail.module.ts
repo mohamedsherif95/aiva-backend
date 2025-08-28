@@ -3,7 +3,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { MailService } from './mail.service';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import envKeys from '../../Config/envKeys';
+import { envKeys } from '../../Config/envKeys';
 
 @Module({
   imports: [
